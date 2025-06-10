@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connectivity-check
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connectivity-check
+  template:
+    metadata:
+      labels:
+        app: connectivity-check
+    spec:
+      containers:
+      - name: checker
+        image: alpine:3.18
+        command: ["/bin/sh","/scripts/check.sh"]
+        volumeMounts:
+        - name: script
+          mountPath: /scripts
+          readOnly: true
+        - name: log-volume
+          # ide írja a script a logfile-t: /root/connectivity/connectivity.log
+          mountPath: /root/connectivity
+      volumes:
+      - name: script
+        configMap:
+          name: connectivity-check-script
+          defaultMode: 0755
+      - name: log-volume
+        hostPath:
+          # EHHEZ cseréld le youruser-t a node-on lévő felhasználód nevére:
+          path: /home/user/connectivity/
+          type: DirectoryOrCreate
+
