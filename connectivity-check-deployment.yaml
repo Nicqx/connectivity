@@ -31,6 +31,5 @@ spec:
       - name: log-volume
         hostPath:
           # EHHEZ cseréld le youruser-t a node-on lévő felhasználód nevére:
-          path: /home/user/connectivity/
+          path: /home/user/connectivity
           type: DirectoryOrCreate
-

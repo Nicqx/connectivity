@@ -5,7 +5,9 @@ metadata:
 data:
   check.sh: |
     #!/bin/sh
-    LOGFILE="/var/log/connectivity/connectivity.log"
+    LOGDIR="/root/connectivity"
+    LOGFILE="$LOGDIR/connectivity.log"
+    mkdir -p "$LOGDIR"
     LAST_STATUS=""
     while true; do
       if ping -c1 -W1 8.8.8.8 >/dev/null 2>&1; then
